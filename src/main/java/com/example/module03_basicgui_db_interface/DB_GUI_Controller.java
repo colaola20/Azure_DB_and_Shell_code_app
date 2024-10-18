@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.scene.control.Button;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +28,10 @@ public class DB_GUI_Controller implements Initializable {
                     new Person(2, "Jacob2", "Smith1", "CPIS1", "CS")
 
             );
+
+
+    @FXML
+    private Button addBtn, clearBtn, deleteBtn, editBtn;
 
 
     @FXML

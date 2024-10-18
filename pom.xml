@@ -18,14 +18,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>20.0.1</version>
+            <version>21</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>20.0.1</version>
+            <version>21</version>
         </dependency>
-
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.31</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -41,6 +45,18 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                currentScene.getStylesheets().add(getClass().getResource("/com/example/module03_basicgui_db_interface/style.css").toExternalForm());
+                <directory>src/main/resources</directory>
+                <includes>
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), currentRoot);
+                    fadeOut.setFromValue(1);
+                    <include>**/*.css</include>
+                </includes>
+                fadeOut.setToValue(0);
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
