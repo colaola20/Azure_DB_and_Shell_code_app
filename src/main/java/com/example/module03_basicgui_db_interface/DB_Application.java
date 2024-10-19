@@ -65,14 +65,14 @@ public class DB_Application extends Application {
         char input;
         do {
             System.out.println(" ");
-            System.out.println("============== Menu ==============");
-            System.out.println("| To start GUI,           press 'g' |");
-            System.out.println("| To connect to DB,       press 'c' |");
-            System.out.println("| To display all users,   press 'a' |");
-            System.out.println("| To insert to the DB,    press 'i' |");
-            System.out.println("| To query by name,       press 'q' |");
-            System.out.println("| To exit,                press 'e' |");
-            System.out.println("===================================");
+            System.out.println("============== Menu ======================");
+            System.out.println("| To start GUI,                press 'g' |");
+            System.out.println("| To connect to DB,            press 'c' |");
+            System.out.println("| To display all users,        press 'a' |");
+            System.out.println("| To insert to the DB,         press 'i' |");
+            System.out.println("| To query by last_name,       press 'q' |");
+            System.out.println("| To exit,                     press 'e' |");
+            System.out.println("==========================================");
             System.out.print("Enter your choice: ");
             input = scan.next().charAt(0);
 
@@ -89,20 +89,23 @@ public class DB_Application extends Application {
                     break;
 
                 case 'i':
-                    System.out.print("Enter Name: ");
-                    String name = scan.next();
-                    System.out.print("Enter Email: ");
-                    String email = scan.next();
-                    System.out.print("Enter Phone: ");
-                    String phone = scan.next();
-                    System.out.print("Enter Address: ");
-                    String address = scan.next();
-                    System.out.print("Enter Password: ");
-                    String password = scan.next();
-                    cdbop.insertUser(name, email, phone, address, password); //Your insertUser method
+                    System.out.print("Enter ID: ");
+                    int id = scan.nextInt();
+                    System.out.print("Enter First Name: ");
+                    String firstName = scan.next();
+                    System.out.print("Enter Last Name: ");
+                    String lastName = scan.next();
+                    System.out.print("Enter department: ");
+                    String department = scan.next();
+                    System.out.print("Enter major: ");
+                    String major = scan.next();
+                    System.out.print("Enter course: ");
+                    String course = scan.next();
+                    Person p = new Person(id, firstName, lastName, department, major, course);
+                    cdbop.insertUser(p); //Your insertUser method
                     break;
                 case 'q':
-                    System.out.print("Enter the name to query: ");
+                    System.out.print("Enter the last name to query: ");
                     String queryName = scan.next();
                     cdbop.queryUserByName(queryName); //Your queryUserByName method
                     break;

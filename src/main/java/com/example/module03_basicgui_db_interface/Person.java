@@ -3,26 +3,28 @@ package com.example.module03_basicgui_db_interface;
 public class Person {
 
 
-    private Integer id;
+    private int id;
     private String firstName;
     private String lastName;
     private String dept;
     private String major;
+    private String course;
 
     public Person() {
     }
 
 
-    public Person(Integer id, String firstName, String lastName, String dept, String major) {
+    public Person(int id, String firstName, String lastName, String dept, String major, String course) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.major = major;
         this.dept = dept;
+        this.course = course;
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -66,5 +68,12 @@ public class Person {
         this.dept = dept;
     }
 
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String dept) {
+        this.course = course;
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.module03_basicgui_db_interface;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -17,31 +18,89 @@ import javafx.scene.control.Button;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
+
 
 
 public class DB_GUI_Controller implements Initializable {
 
+    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/DBname";
+    final String USERNAME = "csc311admin";
+    final String PASSWORD = "MvT$!qp9c26ZY!V";
+
+    public  void listAllUsers() {
+
+
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "SELECT * FROM users ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
+//                int id = resultSet.getInt("id");
+//                String name = resultSet.getString("name");
+//                String email = resultSet.getString("email");
+//                String phone = resultSet.getString("phone");
+//                String address = resultSet.getString("address");
+                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     private final ObservableList<Person> data =
             FXCollections.observableArrayList(
-                    new Person(1, "Jacob", "Smith", "CPIS", "CS"),
-                    new Person(2, "Jacob2", "Smith1", "CPIS1", "CS")
-
+//
+//
+//                    new Person(1, "Jacob", "Smith", "CPIS", "CS", "CSC311"),
+//                    new Person(2, "Jacob2", "Smith1", "CPIS1", "CS", "CSC311")
+//
             );
+    public void loadDataFromDB() {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "SELECT * FROM users ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
+                data.add(p);
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @FXML
-    private Button addBtn, clearBtn, deleteBtn, editBtn;
+    private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn;
 
 
     @FXML
-    TextField first_name, last_name, department, major;
+    TextField first_name, last_name, department, major, course;
     @FXML
     private TableView<Person> tv;
     @FXML
     private TableColumn<Person, Integer> tv_id;
     @FXML
-    private TableColumn<Person, String> tv_fn, tv_ln, tv_dept, tv_major;
+    private TableColumn<Person, String> tv_fn, tv_ln, tv_dept, tv_major, tv_course;
 
     @FXML
     ImageView img_view;
@@ -54,6 +113,8 @@ public class DB_GUI_Controller implements Initializable {
         tv_ln.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tv_dept.setCellValueFactory(new PropertyValueFactory<>("dept"));
         tv_major.setCellValueFactory(new PropertyValueFactory<>("major"));
+        tv_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+
 
 
         tv.setItems(data);
@@ -69,7 +130,8 @@ public class DB_GUI_Controller implements Initializable {
                 first_name.getText(),
                 last_name.getText(),
                 department.getText(),
-                major.getText()
+                major.getText(),
+                course.getText()
         ));
     }
 
@@ -108,7 +170,10 @@ public class DB_GUI_Controller implements Initializable {
         data.remove(p);
     }
 
+    @FXML
+    void themeRecord(ActionEvent event) {
 
+    }
 
     @FXML
     protected void showImage() {
