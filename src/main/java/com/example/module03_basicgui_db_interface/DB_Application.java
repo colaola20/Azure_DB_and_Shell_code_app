@@ -25,6 +25,9 @@ public class DB_Application extends Application {
     private void showScene1() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("splash_screen.fxml"));
+            if (root == null) {
+                throw new IOException("Failed to load FXML file for splash screen.");
+            }
             Scene scene = new Scene(root, 850, 560);
             scene.getStylesheets().add("style.css");
             primaryStage.setScene(scene);
@@ -38,7 +41,9 @@ public class DB_Application extends Application {
     public void changeScene() {
         try {
             Parent newRoot = FXMLLoader.load(getClass().getResource("db_interface_gui.fxml"));
-
+            if (newRoot == null) {
+                throw new IOException("Failed to load FXML file for db_interface_gui.");
+            }
             Scene currentScene = primaryStage.getScene();
             Parent currentRoot = currentScene.getRoot();
             currentScene.getStylesheets().add("style.css");

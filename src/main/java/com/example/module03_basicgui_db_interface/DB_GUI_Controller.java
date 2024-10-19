@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class DB_GUI_Controller implements Initializable {
 
     final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/DBname";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
@@ -196,6 +196,11 @@ public class DB_GUI_Controller implements Initializable {
         department.setText(p.getDept());
         major.setText(p.getMajor());
 
+
+    }
+
+    @FXML
+    void openMenu(ActionEvent event) {
 
     }
 }
