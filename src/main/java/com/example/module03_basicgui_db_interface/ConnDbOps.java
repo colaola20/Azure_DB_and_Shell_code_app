@@ -137,7 +137,7 @@ public class ConnDbOps {
         }
     }
 
-    public void editUsers(Person p) {
+    public void editUser(Person p) {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             String sql = "UPDATE users SET first_name = ?, last_name = ?, department = ?, major = ?, course = ? WHERE id = ?";
@@ -153,6 +153,25 @@ public class ConnDbOps {
 
             if (row > 0) {
                 System.out.println("User was updated successfully.");
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteUser(Person p) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "DELETE FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, p.getId());
+
+            int row = preparedStatement.executeUpdate();
+
+            if (row > 0) {
+                System.out.println("User was deleted successfully.");
             }
 
             preparedStatement.close();

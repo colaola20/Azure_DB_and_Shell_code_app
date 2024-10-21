@@ -142,7 +142,9 @@ public class DB_GUI_Controller implements Initializable {
         System.exit(0);
     }
 
-
+    /**
+     * Edit a record in the TableView and the database using the text field in the application
+     */
     @FXML
     protected void editRecord() {
         Person p= tv.getSelectionModel().getSelectedItem();
@@ -154,7 +156,7 @@ public class DB_GUI_Controller implements Initializable {
         p2.setDept(department.getText());
         p2.setMajor(major.getText());
         p2.setCourse("CSS311");
-        cdbop.editUsers(p2);
+        cdbop.editUser(p2);
         data.remove(c);
         data.add(c,p2);
         tv.getSelectionModel().select(c);
@@ -163,6 +165,7 @@ public class DB_GUI_Controller implements Initializable {
     @FXML
     protected void deleteRecord() {
         Person p= tv.getSelectionModel().getSelectedItem();
+        cdbop.deleteUser(p);
         data.remove(p);
     }
 
