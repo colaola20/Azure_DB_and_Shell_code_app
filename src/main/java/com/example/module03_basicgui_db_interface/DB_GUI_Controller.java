@@ -115,7 +115,8 @@ public class DB_GUI_Controller implements Initializable {
         tv_major.setCellValueFactory(new PropertyValueFactory<>("major"));
         tv_course.setCellValueFactory(new PropertyValueFactory<>("course"));
 
-
+        // Load data from the database
+        loadDataFromDB();
 
         tv.setItems(data);
     }
