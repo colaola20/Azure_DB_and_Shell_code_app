@@ -16,7 +16,6 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -25,33 +24,31 @@ import java.util.ResourceBundle;
 
 public class DB_GUI_Controller implements Initializable {
 
-    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
+//    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
     final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
     private static ConnDbOps cdbop = new ConnDbOps();
-//    public  void listAllUsers() {
-//        try {
-//            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-//            String sql = "SELECT * FROM users ";
-//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
-//                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
-//            }
-//
-//            preparedStatement.close();
-//            conn.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    @FXML
+    private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn;
+
+    @FXML
+    TextField first_name, last_name, department, major, course;
+    @FXML
+    private TableView<Person> tv;
+    @FXML
+    private TableColumn<Person, Integer> tv_id;
+    @FXML
+    private TableColumn<Person, String> tv_fn, tv_ln, tv_dept, tv_major, tv_course;
+
+    @FXML
+    ImageView img_view;
 
 
-
+    /**
+     * The ObservableList is used to store the data from the database
+     */
     private final ObservableList<Person> data =
             FXCollections.observableArrayList();
 
@@ -78,23 +75,6 @@ public class DB_GUI_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-    @FXML
-    private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn;
-
-
-    @FXML
-    TextField first_name, last_name, department, major, course;
-    @FXML
-    private TableView<Person> tv;
-    @FXML
-    private TableColumn<Person, Integer> tv_id;
-    @FXML
-    private TableColumn<Person, String> tv_fn, tv_ln, tv_dept, tv_major, tv_course;
-
-    @FXML
-    ImageView img_view;
 
 
     @Override
@@ -162,6 +142,9 @@ public class DB_GUI_Controller implements Initializable {
         tv.getSelectionModel().select(c);
     }
 
+    /**
+     * Delete a record from the TableView and the database
+     */
     @FXML
     protected void deleteRecord() {
         Person p= tv.getSelectionModel().getSelectedItem();
