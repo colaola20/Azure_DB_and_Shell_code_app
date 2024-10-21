@@ -61,13 +61,11 @@ public class DB_GUI_Controller implements Initializable {
 
 
     private final ObservableList<Person> data =
-            FXCollections.observableArrayList(
-//
-//
-//                    new Person(1, "Jacob", "Smith", "CPIS", "CS", "CSC311"),
-//                    new Person(2, "Jacob2", "Smith1", "CPIS1", "CS", "CSC311")
-//
-            );
+            FXCollections.observableArrayList();
+
+    /**
+     * Load data from the database and add it to the ObservableList
+     */
     public void loadDataFromDB() {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
