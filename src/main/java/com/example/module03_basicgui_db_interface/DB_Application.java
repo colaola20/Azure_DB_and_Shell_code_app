@@ -27,7 +27,7 @@ public class DB_Application extends Application {
             if (root == null) {
                 throw new IOException("Failed to load FXML file for splash screen.");
             }
-            Scene scene = new Scene(root, 850, 560);
+            Scene scene = new Scene(root, 900, 560);
             scene.getStylesheets().add("style.css");
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -52,7 +52,7 @@ public class DB_Application extends Application {
             fadeOut.setOnFinished(e -> {
 
 
-                Scene newScene = new Scene(newRoot,850, 560);
+                Scene newScene = new Scene(newRoot,900, 560);
                 primaryStage.setScene(newScene);
 
 

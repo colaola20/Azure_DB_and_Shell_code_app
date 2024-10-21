@@ -231,6 +231,10 @@ public class DB_GUI_Controller implements Initializable {
         }
     }
 
+    /**
+     * Handle the upload image button
+     * @param event
+     */
     @FXML
     void uploadIMG(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
