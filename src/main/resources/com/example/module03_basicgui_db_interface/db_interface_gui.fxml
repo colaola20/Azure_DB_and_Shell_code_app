@@ -72,6 +72,7 @@
                            <image>
                               <Image url="@profile.png" />
                            </image></ImageView>
+                        <Button fx:id="uploadIMG" layoutX="18.0" layoutY="110.0" mnemonicParsing="false" onAction="#uploadIMG" styleClass="nav_btn" text="Upload img" />
                      </children>
                   </AnchorPane>
                </children></VBox>

@@ -24,15 +24,13 @@ import java.util.ResourceBundle;
 
 
 public class DB_GUI_Controller implements Initializable {
-
-//    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
     final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
     private static ConnDbOps cdbop = new ConnDbOps();
 
     @FXML
-    private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn;
+    private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn, uploadIMG;
 
     private boolean isDarkMode = false;
 
@@ -216,7 +214,10 @@ public class DB_GUI_Controller implements Initializable {
 
     }
 
-
+    /**
+     * Handle keyboard shortcuts particularly for Ctrl+F
+     * @param event
+     */
     @FXML
     public void shortcuts(KeyEvent event) {
         if (new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN).match(event)) {
@@ -228,6 +229,18 @@ public class DB_GUI_Controller implements Initializable {
                 System.out.println("File selected: " + file.getAbsolutePath());
             }
         }
+    }
+
+    @FXML
+    void uploadIMG(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            // Handle the file (e.g., read its content, display it, etc.)
+            System.out.println("File selected: " + file.getAbsolutePath());
+        }
+        img_view.setImage(new Image(file.toURI().toString()));
     }
 
 }
