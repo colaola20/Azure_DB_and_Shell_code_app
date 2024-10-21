@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.module03_basicgui_db_interface.DB_GUI_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="807.0" styleClass="anchor_pane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.module03_basicgui_db_interface.DB_GUI_Controller">
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="535.0" prefWidth="807.0">
          <top>
@@ -129,7 +129,7 @@
       </BorderPane>
    </children>
    <stylesheets>
-       <URL value="@style.css" />
-       <URL value="@../../../../../styling/style.css" />
+      <URL value="@style.css" />
+      <URL value="@../../../../../styling/style.css" />
    </stylesheets>
 </AnchorPane>
