@@ -155,6 +155,10 @@ public class DB_GUI_Controller implements Initializable {
         data.remove(p);
     }
 
+    /**
+     * Change the theme of the application
+     * @param event
+     */
     @FXML
     void themeRecord(ActionEvent event) {
         Scene scene = ThemeBtn.getScene();
