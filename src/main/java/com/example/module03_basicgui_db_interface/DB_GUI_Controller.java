@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,6 +33,8 @@ public class DB_GUI_Controller implements Initializable {
 
     @FXML
     private Button addBtn, clearBtn, deleteBtn, editBtn, ThemeBtn;
+
+    private boolean isDarkMode = false;
 
     @FXML
     TextField first_name, last_name, department, major, course;
@@ -154,7 +157,18 @@ public class DB_GUI_Controller implements Initializable {
 
     @FXML
     void themeRecord(ActionEvent event) {
+        Scene scene = ThemeBtn.getScene();
+        String darkTheme = getClass().getResource("/dark_mode.css").toExternalForm();
+        String lightTheme = getClass().getResource("/light_mode.css").toExternalForm();
 
+        if (isDarkMode) {
+            scene.getStylesheets().remove(darkTheme);
+            scene.getStylesheets().add(lightTheme);
+        } else {
+            scene.getStylesheets().remove(lightTheme);
+            scene.getStylesheets().add(darkTheme);
+        }
+        isDarkMode = !isDarkMode;
     }
 
     @FXML
