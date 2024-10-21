@@ -106,11 +106,6 @@ public class ConnDbOps {
 
             while (resultSet.next()) {
                 Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
-//                int id = resultSet.getInt("id");
-//                String name = resultSet.getString("name");
-//                String email = resultSet.getString("email");
-//                String phone = resultSet.getString("phone");
-//                String address = resultSet.getString("address");
                 System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
             }
 

@@ -30,33 +30,25 @@ public class DB_GUI_Controller implements Initializable {
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
-    public  void listAllUsers() {
-
-
-
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT * FROM users ";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
-//                int id = resultSet.getInt("id");
-//                String name = resultSet.getString("name");
-//                String email = resultSet.getString("email");
-//                String phone = resultSet.getString("phone");
-//                String address = resultSet.getString("address");
-                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
-            }
-
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public  void listAllUsers() {
+//        try {
+//            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+//            String sql = "SELECT * FROM users ";
+//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
+//                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
+//            }
+//
+//            preparedStatement.close();
+//            conn.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 
@@ -122,16 +114,38 @@ public class DB_GUI_Controller implements Initializable {
 
     @FXML
     protected void addNewRecord() {
-
-
-        data.add(new Person(
+        Person p = new Person(
                 data.size()+1,
                 first_name.getText(),
                 last_name.getText(),
                 department.getText(),
                 major.getText(),
-                course.getText()
-        ));
+                "CSS311"
+        );
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "INSERT INTO users (id, first_name, last_name, department, major, course) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, p.getId());
+            preparedStatement.setString(2, p.getFirstName());
+            preparedStatement.setString(3, p.getLastName());
+            preparedStatement.setString(4, p.getDept());
+            preparedStatement.setString(5, p.getMajor());
+            preparedStatement.setString(6, p.getCourse());
+
+            int row = preparedStatement.executeUpdate();
+
+            if (row > 0) {
+                System.out.println("A new user was inserted successfully.");
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        data.add(p);
     }
 
     @FXML
