@@ -77,12 +77,6 @@ public class ConnDbOps {
 
             while (resultSet.next()) {
                 Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
-//                int id = resultSet.getInt("id");
-//                String firstName = resultSet.getString("first name");
-//                String lastName = resultSet.getString("last name");
-//                String department = resultSet.getString("department");
-//                String major = resultSet.getString("major");
-//                String course = resultSet.getString("course");
                 System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
             }
 
@@ -134,6 +128,31 @@ public class ConnDbOps {
 
             if (row > 0) {
                 System.out.println("A new user was inserted successfully.");
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editUsers(Person p) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "UPDATE users SET first_name = ?, last_name = ?, department = ?, major = ?, course = ? WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, p.getFirstName());
+            preparedStatement.setString(2, p.getLastName());
+            preparedStatement.setString(3, p.getDept());
+            preparedStatement.setString(4, p.getMajor());
+            preparedStatement.setString(5, p.getCourse());
+            preparedStatement.setInt(6, p.getId());
+
+            int row = preparedStatement.executeUpdate();
+
+            if (row > 0) {
+                System.out.println("User was updated successfully.");
             }
 
             preparedStatement.close();

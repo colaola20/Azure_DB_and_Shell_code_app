@@ -29,7 +29,7 @@ public class DB_GUI_Controller implements Initializable {
     final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
-
+    private static ConnDbOps cdbop = new ConnDbOps();
 //    public  void listAllUsers() {
 //        try {
 //            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -59,6 +59,7 @@ public class DB_GUI_Controller implements Initializable {
      * Load data from the database and add it to the ObservableList
      */
     public void loadDataFromDB() {
+
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             String sql = "SELECT * FROM users ";
@@ -111,7 +112,9 @@ public class DB_GUI_Controller implements Initializable {
         tv.setItems(data);
     }
 
-
+    /**
+     * Add a new record to the TableView and the database using the text field in the application
+     */
     @FXML
     protected void addNewRecord() {
         Person p = new Person(
@@ -122,29 +125,7 @@ public class DB_GUI_Controller implements Initializable {
                 major.getText(),
                 "CSS311"
         );
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "INSERT INTO users (id, first_name, last_name, department, major, course) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, p.getId());
-            preparedStatement.setString(2, p.getFirstName());
-            preparedStatement.setString(3, p.getLastName());
-            preparedStatement.setString(4, p.getDept());
-            preparedStatement.setString(5, p.getMajor());
-            preparedStatement.setString(6, p.getCourse());
-
-            int row = preparedStatement.executeUpdate();
-
-            if (row > 0) {
-                System.out.println("A new user was inserted successfully.");
-            }
-
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        cdbop.insertUser(p);
         data.add(p);
     }
 
@@ -172,6 +153,8 @@ public class DB_GUI_Controller implements Initializable {
         p2.setLastName(last_name.getText());
         p2.setDept(department.getText());
         p2.setMajor(major.getText());
+        p2.setCourse("CSS311");
+        cdbop.editUsers(p2);
         data.remove(c);
         data.add(c,p2);
         tv.getSelectionModel().select(c);

@@ -72,7 +72,7 @@ public class Person {
         return course;
     }
 
-    public void setCourse(String dept) {
+    public void setCourse(String course) {
         this.course = course;
     }
 
