@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 
@@ -93,6 +93,18 @@ public class DB_GUI_Controller implements Initializable {
         loadDataFromDB();
 
         tv.setItems(data);
+
+        // Add key event handler to the scene
+        Scene scene = tv.getScene();
+        if (scene != null) {
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, this::shortcuts);
+        } else {
+            tv.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    newScene.addEventHandler(KeyEvent.KEY_PRESSED, this::shortcuts);
+                }
+            });
+        }
     }
 
     /**
@@ -203,4 +215,19 @@ public class DB_GUI_Controller implements Initializable {
     void openMenu(ActionEvent event) {
 
     }
+
+
+    @FXML
+    public void shortcuts(KeyEvent event) {
+        if (new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN).match(event)) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+                // Handle the file (e.g., read its content, display it, etc.)
+                System.out.println("File selected: " + file.getAbsolutePath());
+            }
+        }
+    }
+
 }

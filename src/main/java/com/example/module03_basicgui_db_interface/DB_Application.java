@@ -19,7 +19,6 @@ public class DB_Application extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setResizable(false);
         showScene1();
-
     }
 
     private void showScene1() {
@@ -56,6 +55,7 @@ public class DB_Application extends Application {
                 Scene newScene = new Scene(newRoot,850, 560);
                 primaryStage.setScene(newScene);
 
+
             });
 
             fadeOut.play();
@@ -63,6 +63,7 @@ public class DB_Application extends Application {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) throws ClassNotFoundException {
         cdbop = new ConnDbOps();
         Scanner scan = new Scanner(System.in);
