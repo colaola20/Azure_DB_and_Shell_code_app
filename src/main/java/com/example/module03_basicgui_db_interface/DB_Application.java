@@ -78,7 +78,15 @@ public class DB_Application extends Application {
                     String major = scan.next();
                     System.out.print("Enter course: ");
                     String course = scan.next();
-                    Person p = new Person(id, firstName, lastName, department, major, course);
+                    System.out.print("Enter email: ");
+                    String email = scan.next();
+                    System.out.print("Enter DOB: ");
+                    String DOB = scan.next();
+                    System.out.print("Enter zipCode: ");
+                    int zipCode = scan.nextInt();
+                    System.out.print("Enter password: ");
+                    String password = scan.next();
+                    Person p = new Person(id, firstName, lastName, department, major, course, email, DOB, zipCode, password);
                     cdbop.insertUser(p); //Your insertUser method
                     break;
                 case 'q':

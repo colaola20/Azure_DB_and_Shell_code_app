@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class ConnDbOps {
     final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson1";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
@@ -26,7 +26,7 @@ public class ConnDbOps {
             //First, connect to MYSQL server and create the database if not created
             Connection conn = DriverManager.getConnection(MYSQL_SERVER_URL, USERNAME, PASSWORD);
             Statement statement = conn.createStatement();
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS Person");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS newPerson1");
             statement.close();
             conn.close();
 
@@ -39,7 +39,11 @@ public class ConnDbOps {
                     + "last_name VARCHAR(200) NOT NULL,"
                     + "department VARCHAR(200) NOT NULL,"
                     + "major VARCHAR(200) NOT NULL,"
-                    + "course VARCHAR(200) NOT NULL"
+                    + "course VARCHAR(200) NOT NULL,"
+                    + "email VARCHAR(100),"
+                    + "DOB DATE,"
+                    + "zip_code INT(5),"
+                    + "password VARCHAR(50) NOT NULL"
                     + ")";
             statement.executeUpdate(sql);
 
@@ -99,8 +103,8 @@ public class ConnDbOps {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"));
-                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse());
+                Person p = new Person(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("department"), resultSet.getString("major"), resultSet.getString("course"), resultSet.getString("email"), resultSet.getString("DOB"), resultSet.getInt("zip_code"), resultSet.getString("password"));
+                System.out.println("ID: " + p.getId() + ", First Name: " + p.getFirstName() + ", Last Name: " + p.getLastName() + ", Department: " + p.getDept() + ", Major: " + p.getMajor() + ", Course: " + p.getCourse() + ", Email: " + p.getEmail() + ", DOB: " + p.getDOB() + ", Zip Code: " + p.getZipCode() + ", Password: " + p.getPassword());
             }
 
             preparedStatement.close();
@@ -115,7 +119,7 @@ public class ConnDbOps {
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "INSERT INTO users (id, first_name, last_name, department, major, course) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (id, first_name, last_name, department, major, course, email, DOB, zip_code, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, p.getId());
             preparedStatement.setString(2, p.getFirstName());
@@ -123,6 +127,11 @@ public class ConnDbOps {
             preparedStatement.setString(4, p.getDept());
             preparedStatement.setString(5, p.getMajor());
             preparedStatement.setString(6, p.getCourse());
+            preparedStatement.setString(7, p.getEmail());
+            preparedStatement.setString(8, p.getDOB());
+            preparedStatement.setInt(9, p.getZipCode());
+            preparedStatement.setString(10, p.getPassword());
+
 
             int row = preparedStatement.executeUpdate();
 

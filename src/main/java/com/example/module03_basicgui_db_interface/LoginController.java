@@ -20,11 +20,14 @@ import java.sql.*;
 
 
 public class LoginController {
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/Person";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson1";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
+    private Person p = new Person();
 
+    @FXML
+    private Label incorrectPassword;
 
     @FXML
     private Button loginBtn;
@@ -34,25 +37,29 @@ public class LoginController {
 
     @FXML
     void login(ActionEvent event) {
+        String user = username.getText();
+        String pass = password.getText();
+        Person p = null;
+
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT * FROM users ";
+            String sql = "SELECT * FROM users WHERE email = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, user);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            while (resultSet.next()) {
+                p = new Person(resultSet.getString("email"), resultSet.getString("password"));
+            }
+
             preparedStatement.close();
             conn.close();
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String user = username.getText();
-        String pass = password.getText();
-        System.out.println("Username: " + user);
-        System.out.println("Password: " + pass);
-        if (user.equals("admin") && pass.equals("admin")) {
+        if ((user.equals("admin") && pass.equals("admin"))||(p != null && (user.equals(p.getEmail()) && pass.equals(p.getPassword())))) {
             System.out.println("Login successful");
             try {
                 // Load the new FXML file
@@ -63,11 +70,13 @@ public class LoginController {
                 Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
                 // Set the new Scene on the primary stage
                 primaryStage.setScene(newScene);
+                incorrectPassword.setText("");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("Login failed");
+        }
+        else {
+            incorrectPassword.setText("Incorrect username or password");
         }
     }
 }
