@@ -1,9 +1,9 @@
 .body {
     font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
+    background-color: #f88;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     margin: 0;
 }

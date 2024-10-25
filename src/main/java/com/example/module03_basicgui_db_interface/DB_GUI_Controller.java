@@ -47,6 +47,9 @@ public class DB_GUI_Controller implements Initializable {
     ImageView img_view;
 
 
+
+
+
     /**
      * The ObservableList is used to store the data from the database
      */
@@ -172,14 +175,14 @@ public class DB_GUI_Controller implements Initializable {
     @FXML
     void themeRecord(ActionEvent event) {
         Scene scene = ThemeBtn.getScene();
-        String darkTheme = getClass().getResource("/dark_mode.css").toExternalForm();
-        String lightTheme = getClass().getResource("/light_mode.css").toExternalForm();
+        String darkTheme = getClass().getResource("styling/dark_mode.css").toString();
+        String lightTheme = getClass().getResource("styling/light_mode.css").toString();
 
         if (isDarkMode) {
-            scene.getStylesheets().remove(darkTheme);
+            scene.getStylesheets().clear();
             scene.getStylesheets().add(lightTheme);
         } else {
-            scene.getStylesheets().remove(lightTheme);
+            scene.getStylesheets().clear();
             scene.getStylesheets().add(darkTheme);
         }
         isDarkMode = !isDarkMode;

@@ -130,7 +130,7 @@
       </BorderPane>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
-      <URL value="@../../../../../styling/style.css" />
+      <URL value="@styling/style.css" />
+
    </stylesheets>
 </AnchorPane>
