@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.module03_basicgui_db_interface.RegistrationController">
+   <children>
+      <VBox alignment="CENTER_LEFT" layoutX="79.0" prefHeight="400.0" prefWidth="443.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="83.0" prefWidth="443.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="152.0" text="Registration Form:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label alignment="TOP_LEFT" text="Full name:" />
+            <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="443.0">
+               <children>
+                  <TextField fx:id="firstNameTF" onInputMethodTextChanged="#isInputFNameValid" prefHeight="26.0" prefWidth="200.0" promptText="First">
+                     <opaqueInsets>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="lastNameTF" onAction="#isInputLNameValid" prefHeight="26.0" prefWidth="200.0" promptText="Last">
+                     <opaqueInsets>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="43.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </HBox>
+            <Label text="Email:">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="emailTF" onAction="#isInputEmailValid" />
+            <Label text="Date of Birth (mm/dd/yyyy):">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="dobTF" onAction="#isInputDOBValid" />
+            <Label text="Zip Code:">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="zipCodeTF" onAction="#isInputZCValid" />
+            <VBox alignment="CENTER" prefHeight="76.0" prefWidth="443.0">
+               <children>
+                  <Button fx:id="registerBtn" mnemonicParsing="false" onAction="#register" text="Register" />
+                  <Label fx:id="errorMessage">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

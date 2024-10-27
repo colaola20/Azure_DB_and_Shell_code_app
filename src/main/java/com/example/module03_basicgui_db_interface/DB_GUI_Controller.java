@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 
 public class DB_GUI_Controller implements Initializable {
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson1";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson2";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
     private static ConnDbOps cdbop = new ConnDbOps();

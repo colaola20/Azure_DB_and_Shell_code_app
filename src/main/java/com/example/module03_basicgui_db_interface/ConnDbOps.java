@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class ConnDbOps {
     final String MYSQL_SERVER_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/";
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson1";
+    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson2";
     final String USERNAME = "csc311admin";
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
@@ -26,7 +26,7 @@ public class ConnDbOps {
             //First, connect to MYSQL server and create the database if not created
             Connection conn = DriverManager.getConnection(MYSQL_SERVER_URL, USERNAME, PASSWORD);
             Statement statement = conn.createStatement();
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS newPerson1");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS newPerson2");
             statement.close();
             conn.close();
 
@@ -37,9 +37,9 @@ public class ConnDbOps {
                     + "id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                     + "first_name VARCHAR(200) NOT NULL,"
                     + "last_name VARCHAR(200) NOT NULL,"
-                    + "department VARCHAR(200) NOT NULL,"
-                    + "major VARCHAR(200) NOT NULL,"
-                    + "course VARCHAR(200) NOT NULL,"
+                    + "department VARCHAR(200),"
+                    + "major VARCHAR(200),"
+                    + "course VARCHAR(200),"
                     + "email VARCHAR(100),"
                     + "DOB DATE,"
                     + "zip_code INT(5),"

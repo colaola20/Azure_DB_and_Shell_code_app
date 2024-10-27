@@ -63,11 +63,16 @@
                   <Insets top="10.0" />
                </padding>
             </Label>
-            <Label text="Don't have an account? Register">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-            </Label>
+            <VBox prefHeight="139.0" prefWidth="445.0">
+               <children>
+                  <Label fx:id="registerText" text="Don't have an account?" />
+                  <Button fx:id="registerBtn" mnemonicParsing="false" onAction="#register" text="Register">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>
