@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,25 +21,13 @@ public class RegistrationController {
     private static ConnDbOps cdbop = new ConnDbOps();
 
     @FXML
-    private TextField dobTF;
-
-    @FXML
-    private TextField emailTF;
-
-    @FXML
     private Label errorMessage;
 
     @FXML
-    private TextField firstNameTF;
-
-    @FXML
-    private TextField lastNameTF;
+    private TextField lastNameTF, zipCodeTF, firstNameTF, emailTF, dobTF;
 
     @FXML
     private Button registerBtn;
-
-    @FXML
-    private TextField zipCodeTF;
 
     private Person p = null;
 
@@ -69,18 +56,50 @@ public class RegistrationController {
 
     }
 
+    /**
+     * Register a new user. Checks if the input is valid, and if it is, adds the user to the database and allows the user log in.
+     * @param event
+     */
     @FXML
     void register(ActionEvent event) {
         String firstName = firstNameTF.getText();
         String lastName = lastNameTF.getText();
         String email = emailTF.getText();
         String dob = dobTF.getText();
+        String zipC = zipCodeTF.getText();
+
+        if (!firstName.isEmpty() && (!isNameValid(firstName))) {
+            errorMessage.setText("Invalid first name.");
+            return;
+        }
+
+        if (!lastName.isEmpty() && (!isNameValid(lastName))) {
+            errorMessage.setText("Invalid last name.");
+            return;
+        }
+        if (!email.isEmpty() && (!isEmailValid(email))) {
+            errorMessage.setText("Invalid email.");
+            return;
+        }
+        if (!dob.isEmpty() && (!isDobValid(dob))) {
+            errorMessage.setText("Invalid date of birth.");
+            return;
+        }
+        if (!zipC.isEmpty() && (!isZipCodeValid(zipC))) {
+            errorMessage.setText("Invalid zip code.");
+            return;
+        }
+
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || dob.isEmpty() || zipC.isEmpty()) {
+            errorMessage.setText("All fields must be filled out.");
+            return;
+        }
+
         int zipCode = Integer.parseInt(zipCodeTF.getText());
-        String password = lastName + zipCode + "!";
-
-        String DOBforSQL = dob.substring(6, 10) + "-" + dob.substring(0, 2) + "-" + dob.substring(3, 5);
-
         if (isNameValid(firstName) && isNameValid(lastName) && isEmailValid(email) && isDobValid(dob) && isZipCodeValid(String.valueOf(zipCode))) {
+            String password = lastName + zipCode + "!";
+            String DOBforSQL = dob.substring(6, 10) + "-" + dob.substring(0, 2) + "-" + dob.substring(3, 5);
+
             p = new Person(firstName, lastName, email, DOBforSQL, zipCode, password);
             cdbop.connectToDatabase();
             cdbop.insertUser(p);
@@ -97,36 +116,44 @@ public class RegistrationController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            if (!isNameValid(firstName)) {
-                errorMessage.setText("Invalid first name.");
-            } else if (!isNameValid(lastName)) {
-                errorMessage.setText("Invalid last name.");
-            } else if (!isEmailValid(email)) {
-                errorMessage.setText("Invalid email.");
-            } else if (!isDobValid(dob)) {
-                errorMessage.setText("Invalid date of birth.");
-            } else if (!isZipCodeValid(String.valueOf(zipCode))) {
-                errorMessage.setText("Invalid zip code.");
-            }
         }
     }
 
+    /**
+     * Check if the zip code is valid (should be 5-digit number)
+     * @param zipCode
+     * @return
+     */
     private boolean isZipCodeValid(String zipCode) {
         final String regex = "[0-9]{5}";
         return zipCode.matches(regex);
     }
 
+    /**
+     * Check if the date of birth is valid (should be in the format MM/DD/YYYY and the year should be between 1920 and 2024)
+     * @param dob
+     * @return
+     */
     private boolean isDobValid(String dob) {
         final String regex = "(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(20[0-2][0-4]|19[2-9][0-9])";
         return dob.matches(regex);
     }
 
+    /**
+     * Check if the email is valid (should be in the format <word>@farmingdale.edu)
+     * @param email
+     * @return
+     */
     private boolean isEmailValid(String email) {
         final String regex = "(\\w+)@farmingdale.edu";
         return email.matches(regex);
     }
 
+    /**
+     * Check if the name is valid (should be between 2 and 25 characters long)
+     * @param name
+     * @return
+     */
     private boolean isNameValid(String name) {
         final String regex = "([a-zA-Z]{2,25})";
         return name.matches(regex);

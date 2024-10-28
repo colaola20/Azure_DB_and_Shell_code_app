@@ -27,6 +27,7 @@ public class DB_Application extends Application {
                 throw new IOException("Failed to load FXML file for splash screen.");
             }
             Scene scene = new Scene(root, 900, 560);
+            scene.getStylesheets().add(getClass().getResource("styling/styleForSplash.css").toString());
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {

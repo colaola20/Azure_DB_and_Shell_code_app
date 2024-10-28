@@ -6,15 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.*;
 
@@ -25,6 +23,9 @@ public class LoginController {
     final String PASSWORD = "MvT$!qp9c26ZY!V";
 
     private Person p = new Person();
+
+    @FXML
+    private AnchorPane body;
 
     @FXML
     private Label incorrectPassword;
@@ -90,6 +91,7 @@ public class LoginController {
             Parent newRoot = FXMLLoader.load(getClass().getResource("/com/example/module03_basicgui_db_interface/Registration.fxml"));
             // Create a new Scene with the loaded FXML root
             Scene newScene = new Scene(newRoot);
+            newScene.getStylesheets().add(getClass().getResource("styling/RegisterForm.css").toString());
             // Get the current stage
             Stage primaryStage = (Stage) registerText.getScene().getWindow();
             // Set the new Scene on the primary stage
