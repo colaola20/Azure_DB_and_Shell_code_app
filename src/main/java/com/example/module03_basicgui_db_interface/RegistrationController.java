@@ -8,16 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class RegistrationController {
 
-    final String DB_URL = "jdbc:mysql://csc311sorychserver.mysql.database.azure.com/newPerson2";
-    final String USERNAME = "csc311admin";
-    final String PASSWORD = "MvT$!qp9c26ZY!V";
     private static ConnDbOps cdbop = new ConnDbOps();
 
     @FXML
@@ -31,29 +27,80 @@ public class RegistrationController {
 
     private Person p = null;
 
+    /**
+     * Set up the initial state of the GUI, add listeners to input fields, and disable the register button until all fields are valid.
+     */
     @FXML
-    void isInputDOBValid(ActionEvent event) {
+    public void initialize() {
+        // Add listeners to input fields
+        firstNameTF.textProperty().addListener((observable, oldValue, newValue) -> validateInputs());
+        lastNameTF.textProperty().addListener((observable, oldValue, newValue) -> validateInputs());
+        emailTF.textProperty().addListener((observable, oldValue, newValue) -> validateInputs());
+        dobTF.textProperty().addListener((observable, oldValue, newValue) -> validateInputs());
+        zipCodeTF.textProperty().addListener((observable, oldValue, newValue) -> validateInputs());
 
+        // Initially disable the register button
+        registerBtn.setDisable(true);
     }
 
-    @FXML
-    void isInputEmailValid(ActionEvent event) {
+    /**
+     * Validate the input fields. If all fields are valid, enable the register button.
+     */
+    private void validateInputs() {
+        String firstName = firstNameTF.getText();
+        String lastName = lastNameTF.getText();
+        String email = emailTF.getText();
+        String dob = dobTF.getText();
+        String zipC = zipCodeTF.getText();
 
-    }
+        if (!firstName.isEmpty() && (!isNameValid(firstName))) {
+            errorMessage.setText("Invalid first name.");
+            return;
+        }
+        else {
+            errorMessage.setText("");
+        }
 
-    @FXML
-    void isInputFNameValid(InputMethodEvent event) {
+        if (!lastName.isEmpty() && (!isNameValid(lastName))) {
+            errorMessage.setText("Invalid last name.");
+            return;
+        }
+        else {
+            errorMessage.setText("");
+        }
 
-    }
+        if (!email.isEmpty() && (!isEmailValid(email))) {
+            errorMessage.setText("Invalid email.");
+            return;
+        }
+        else {
+            errorMessage.setText("");
+        }
 
-    @FXML
-    void isInputLNameValid(ActionEvent event) {
+        if (!dob.isEmpty() && (!isDobValid(dob))) {
+            errorMessage.setText("Invalid date of birth.");
+            return;
+        }
+        else {
+            errorMessage.setText("");
+        }
 
-    }
+        if (!zipC.isEmpty() && (!isZipCodeValid(zipC))) {
+            errorMessage.setText("Invalid zip code.");
+            return;
+        }
+        else {
+            errorMessage.setText("");
+        }
 
-    @FXML
-    void isInputZCValid(ActionEvent event) {
 
+        boolean isValid = isNameValid(firstName) &&
+                isNameValid(lastName) &&
+                isEmailValid(email) &&
+                isDobValid(dob) &&
+                isZipCodeValid(zipC);
+
+        registerBtn.setDisable(!isValid);
     }
 
     /**
@@ -67,28 +114,6 @@ public class RegistrationController {
         String email = emailTF.getText();
         String dob = dobTF.getText();
         String zipC = zipCodeTF.getText();
-
-        if (!firstName.isEmpty() && (!isNameValid(firstName))) {
-            errorMessage.setText("Invalid first name.");
-            return;
-        }
-
-        if (!lastName.isEmpty() && (!isNameValid(lastName))) {
-            errorMessage.setText("Invalid last name.");
-            return;
-        }
-        if (!email.isEmpty() && (!isEmailValid(email))) {
-            errorMessage.setText("Invalid email.");
-            return;
-        }
-        if (!dob.isEmpty() && (!isDobValid(dob))) {
-            errorMessage.setText("Invalid date of birth.");
-            return;
-        }
-        if (!zipC.isEmpty() && (!isZipCodeValid(zipC))) {
-            errorMessage.setText("Invalid zip code.");
-            return;
-        }
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || dob.isEmpty() || zipC.isEmpty()) {
             errorMessage.setText("All fields must be filled out.");
